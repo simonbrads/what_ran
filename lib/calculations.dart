@@ -6,7 +6,7 @@ class Iv {
   int attack;
   int defence;
   int hp;
-  double level;
+  int level;
 
   Iv(this.attack, this.defence, this.hp, this.level);
 }
@@ -17,11 +17,11 @@ int checkCp(int baseAttack, int attack, int baseDefence, int defence, int baseHp
       .floor();
 }
 
-List<Iv> getMatchingIvs(int cp, int baseAttack, int baseDefence, int baseHp, List<double> levels) {
+List<Iv> getMatchingIvs(int cp, int baseAttack, int baseDefence, int baseHp, List<int> levels) {
   List<double> multipliers = levelMultipliers;
 
   if (levels != null) {
-    multipliers = List<double>.generate(levels.length, (l) => levelMultipliers[((levels[l] - 1) * 2).floor()]);
+    multipliers = List<double>.generate(levels.length, (l) => levelMultipliers[levels[l] - 1]);
   }
 
   var ivs = <Iv>[];
@@ -31,7 +31,7 @@ List<Iv> getMatchingIvs(int cp, int baseAttack, int baseDefence, int baseHp, Lis
       for (int defence = 0; defence <= 15; defence++) {
         for (int hp = 0; hp <= 15; hp++) {
           if (checkCp(baseAttack, attack, baseDefence, defence, baseHp, hp, multipliers[multiplier]) == cp) {
-            ivs.add(Iv(attack, defence, hp, levels != null ? levels[multiplier] : multiplier / 2 + 1));
+            ivs.add(Iv(attack, defence, hp, levels != null ? levels[multiplier] : multiplier + 1));
           }
         }
       }

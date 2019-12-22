@@ -102,7 +102,7 @@ class _WhatRanHomePageState extends State<WhatRanHomePage> {
 
   String _formatIvs(List<Iv> ivs) {
     var sb = StringBuffer();
-    double level;
+    int level;
 
     for (var iv in ivs) {
       if (iv.level != level) {
